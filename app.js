@@ -14,6 +14,5 @@ const app = express()
  app.use(welcomeRouter)
  app.use(authRouter)
 
-
  const PORT = process.env.PORT
  app.listen(PORT, console.log('Server listening on port: ', PORT))

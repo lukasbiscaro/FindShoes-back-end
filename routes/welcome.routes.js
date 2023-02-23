@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import 'dotenv/config'
+import authenticatedMiddleware from '../middlewares/authenticatedMiddleware.js'
 
 const welcomeRouter = Router()
 
-welcomeRouter.get('/', async (req, res) => {
-    res.status(200).json({ message: 'Welcome to FindShoes API' })
+welcomeRouter.get('/', authenticatedMiddleware, async (req, res) => {
+    res.send("Welcome to the FindShoes API")
 })
 
 export default welcomeRouter
