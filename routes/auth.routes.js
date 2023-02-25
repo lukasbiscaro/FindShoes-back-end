@@ -6,8 +6,9 @@ import jwt from 'jsonwebtoken'
 
 const authRouter = Router()
 
-authRouter.post('/sign-up', async (req, res) => {
-    const { name, email, password } = req.body
+authRouter.post('/auth/sign-up', async (req, res) => {
+
+    const { firstName, lastName, email, password } = req.body
 
     try {
         const userExists = await User.findOne({ email })
@@ -19,12 +20,13 @@ authRouter.post('/sign-up', async (req, res) => {
         const passwordHash = bcrypt.hashSync(password, salt)
 
         const newUser = await User.create({
-            name,
+            firstName,
+            lastName,
             email,
             passwordHash
         })
 
-        return res.status(201).json({ name, email })
+        return res.status(201).json({ firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, message: "User Created" })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
