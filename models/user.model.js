@@ -4,7 +4,10 @@ import validator from "validator"
 const { model, Schema } = mongoose
 
 const userSchema = new Schema({
-    name: {
+    firstName: {
+        type: String
+    },
+    lastName: {
         type: String
     },
     email: {
