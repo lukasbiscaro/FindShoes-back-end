@@ -11,6 +11,7 @@ authRouter.post('/auth/sign-up', async (req, res) => {
     const { firstName, lastName, email, password } = req.body
 
     try {
+
         const userExists = await User.findOne({ email })
         if (userExists) {
             throw new Error('User already exists.')
@@ -27,23 +28,28 @@ authRouter.post('/auth/sign-up', async (req, res) => {
         })
 
         return res.status(201).json({ firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, message: "User Created" })
+        
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
-authRouter.post('/login', async (req, res) => {
+authRouter.post('/auth/login', async (req, res) => {
+
     const { email, password } = req.body
 
     try {
+
         const user = await User.findOne({ email })
         if (!user) {
             throw new Error('User does not exist.')
         }
 
-        if (!bcrypt.compareSync(password, user.passwordHash)) {
-            return res.status(401).json({ message: 'Unauthorized' })
+        const comparePassword = bcrypt.compareSync(password, user.passwordHash)
+
+        if (!comparePassword) {
+            throw new Error('Password incorrect')
         }
 
         const expiresIn = process.env.JWT_EXPIRES
@@ -51,7 +57,8 @@ authRouter.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn })
 
-        return res.status(200).json({ logged: true, jwt: token })
+        return res.status(200).json({ logged: true, message: `Successful access by ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`, jwt: token })
+
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
