@@ -4,6 +4,7 @@ import cors from 'cors'
 import connectDb from './config/db.connection.js'
 import authRouter from './routes/auth.routes.js'
 import welcomeRouter from './routes/welcome.routes.js'
+import users from './routes/users.routes.js'
 
 connectDb()
 
@@ -12,6 +13,7 @@ const app = express()
  app.use(express.json())
 
  app.use(welcomeRouter)
+ app.use(users)
  app.use(authRouter)
 
  const PORT = process.env.PORT
