@@ -3,7 +3,7 @@ import User from '../models/user.model.js'
 
 const userRoutes = Router()
 
-userRoutes.get('/', async (req, res) => {
+userRoutes.get('/users', async (req, res) => {
     try {
         const users = await User.find({})
         res.status(200).json(users)
@@ -13,7 +13,7 @@ userRoutes.get('/', async (req, res) => {
     }
 })
 
-userRoutes.get('/:id', async (req, res) => {
+userRoutes.get('/users/:id', async (req, res) => {
     try {
 
         const { id } = req.params
@@ -30,7 +30,7 @@ userRoutes.get('/:id', async (req, res) => {
     }
 })
 
-userRoutes.put('/:id', async (req, res) => {
+userRoutes.put('/users/:id', async (req, res) => {
     try {
         const payload = req.body
         const { id } = req.params
@@ -42,7 +42,7 @@ userRoutes.put('/:id', async (req, res) => {
     }
 })
 
-userRoutes.delete('/:id', async (req, res) => {
+userRoutes.delete('/users/:id', async (req, res) => {
     try {
 
         const { id } = req.params
