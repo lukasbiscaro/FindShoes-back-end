@@ -57,7 +57,7 @@ authRouter.post('/auth/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn })
 
-        return res.status(200).json({ logged: true, message: `Successful access by ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`, jwt: token })
+        return res.status(200).json({ logged: true, message: `Successfully accessed by: ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`, jwt: token })
 
     } catch (error) {
         console.log(error)
