@@ -3,7 +3,11 @@ import validator from "validator"
 
 const { model, Schema } = mongoose
 
-const userSchema = new Schema({
+const profileSchema = new Schema({
+    user: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }] ,
     firstName: {
         type: String,
         required: true
@@ -28,4 +32,4 @@ const userSchema = new Schema({
     }
 }, { timestamps: true })
 
-export default model('User', userSchema)
+export default model('Profile', profileSchema)

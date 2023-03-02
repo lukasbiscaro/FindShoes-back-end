@@ -5,6 +5,7 @@ import connectDb from './config/db.connection.js'
 import authRouter from './routes/auth.routes.js'
 import welcomeRouter from './routes/welcome.routes.js'
 import users from './routes/users.routes.js'
+import profile from './routes/profile.routes.js'
 
 connectDb()
 
@@ -14,6 +15,7 @@ const app = express()
 
  app.use(welcomeRouter)
  app.use(users)
+ app.use(profile)
  app.use(authRouter)
 
  const PORT = process.env.PORT
