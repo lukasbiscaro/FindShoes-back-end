@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import User from '../models/user.model.js'
+import Profile from '../models/profile.model.js'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
@@ -24,13 +25,21 @@ authRouter.post('/auth/sign-up', async (req, res) => {
             firstName,
             lastName,
             email,
-            passwordHash
+            passwordHash,
         })
 
-        return res.status(201).json({ firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, message: "User Created" })
-        
+        if (newUser) {
+            const newProfile = await Profile.create({ user: newUser })
+        }
+
+        return res.status(201).json({
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            email: newUser.email,
+            message: "User Created"
+        })
+
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
     }
 })
@@ -60,7 +69,6 @@ authRouter.post('/auth/login', async (req, res) => {
         return res.status(200).json({ logged: true, message: `Successfully accessed by: ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`, jwt: token })
 
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
     }
 })

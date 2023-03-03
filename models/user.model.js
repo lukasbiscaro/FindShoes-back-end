@@ -15,8 +15,8 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        trim: true,
         unique: true,
+        trim: true,
         validate: {
             validator: value => validator.isEmail(value),
             message: props => `The email: ${props.value} is invalid.`

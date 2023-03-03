@@ -5,22 +5,64 @@ import auth from '../middlewares/authenticatedMiddleware.js'
 
 const profileRoutes = Router()
 
-profileRoutes.get('/profile', auth, async (req, res) => {
+profileRoutes.get('/profiles', async (req, res) => {
+    try {
+        const profiles = await Profile.find().populate('user', 'firstName lastName email')
+
+        res.status(200).json(profiles)
+
+    } catch (error) {
+        res.status(500).json("Internal Server Error")
+    }
+})
+
+profileRoutes.get('/profile/me', auth, async (req, res) => {
     try {
 
-        const profile = await Profile.find({ user: req.user.id }).populate('user')
+        const profile = await Profile.findOne({ user: req.user.id }).populate('user', 'firstName lastName email')
 
         if (!profile) {
-            res.status(400).json("Profile not found.")
+            throw new Error("Profile not found.")
         }
 
         res.status(200).json(profile)
 
-        console.log(req.user.id)
-
     } catch (error) {
         res.status(500).json("Internal Server Error")
 
+    }
+})
+
+profileRoutes.put('/profile/me', auth, async (req, res) => {
+    try {
+
+        const payload = req.body
+
+        const updatedUser = await User.findOneAndUpdate({ _id: req.user.id }, payload)
+
+        res.status(200).json({
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            email: updatedUser.email,
+        })
+
+
+    } catch (error) {
+        res.status(500).json('Internal Server Error')
+
+    }
+})
+
+profileRoutes.delete('/profile/me', auth, async (req, res) => {
+    try {
+
+        await Profile.findOneAndDelete({ user: req.user.id })
+        await User.findOneAndDelete({ _id: req.user.id })
+
+        res.status(204).json('User was successfully deleted.')
+
+    } catch (error) {
+        res.status(500).json("Internal Server Error")
     }
 })
 
