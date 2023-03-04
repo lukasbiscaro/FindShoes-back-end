@@ -2,6 +2,8 @@ import { Router } from "express";
 import Profile from '../models/profile.model.js'
 import User from '../models/user.model.js'
 import auth from '../middlewares/authenticatedMiddleware.js'
+import bcrypt from 'bcryptjs'
+import 'dotenv/config'
 
 const profileRoutes = Router()
 
@@ -16,7 +18,7 @@ profileRoutes.get('/profiles', async (req, res) => {
     }
 })
 
-profileRoutes.get('/profile/me', auth, async (req, res) => {
+profileRoutes.get('/profile', auth, async (req, res) => {
     try {
 
         const profile = await Profile.findOne({ user: req.user.id }).populate('user', 'firstName lastName email')
@@ -29,23 +31,25 @@ profileRoutes.get('/profile/me', auth, async (req, res) => {
 
     } catch (error) {
         res.status(500).json("Internal Server Error")
-
     }
 })
 
-profileRoutes.put('/profile/me', auth, async (req, res) => {
+profileRoutes.put('/profile', auth, async (req, res) => {
     try {
 
         const payload = req.body
 
-        const updatedUser = await User.findOneAndUpdate({ _id: req.user.id }, payload)
+        const updatedUser = await User.findOneAndUpdate({ _id: req.user.id }, payload, { new: true })
+        // const salt = bcrypt.genSaltSync(+process.env.SALT_ROUNDS)
+        // const cryptPassword = bcrypt.hashSync(req.user.password, salt)
+        // const updatedPassword = await User.findByIdAndUpdate({ _id: req.user.id }, { password: password }, { new: true })
 
         res.status(200).json({
             firstName: updatedUser.firstName,
             lastName: updatedUser.lastName,
             email: updatedUser.email,
+            // password: updatedPassword
         })
-
 
     } catch (error) {
         res.status(500).json('Internal Server Error')
@@ -53,7 +57,7 @@ profileRoutes.put('/profile/me', auth, async (req, res) => {
     }
 })
 
-profileRoutes.delete('/profile/me', auth, async (req, res) => {
+profileRoutes.delete('/profile', auth, async (req, res) => {
     try {
 
         await Profile.findOneAndDelete({ user: req.user.id })
