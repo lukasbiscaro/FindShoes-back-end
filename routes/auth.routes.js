@@ -69,6 +69,7 @@ authRouter.post('/auth/login', async (req, res) => {
         return res.status(200).json({ logged: true, message: `Successfully accessed by: ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`, jwt: token })
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' })
     }
 })

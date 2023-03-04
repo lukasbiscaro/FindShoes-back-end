@@ -40,15 +40,15 @@ profileRoutes.put('/profile', auth, async (req, res) => {
         const payload = req.body
 
         const updatedUser = await User.findOneAndUpdate({ _id: req.user.id }, payload, { new: true })
-        // const salt = bcrypt.genSaltSync(+process.env.SALT_ROUNDS)
-        // const cryptPassword = bcrypt.hashSync(req.user.password, salt)
-        // const updatedPassword = await User.findByIdAndUpdate({ _id: req.user.id }, { password: password }, { new: true })
+        const salt = bcrypt.genSaltSync(+process.env.SALT_ROUNDS)
+        const cryptPassword = bcrypt.hashSync(req.body.password, salt)
+        const updatedPassword = await User.findOneAndUpdate({ _id: req.user.id }, { passwordHash: cryptPassword }, { new: true })
 
         res.status(200).json({
             firstName: updatedUser.firstName,
             lastName: updatedUser.lastName,
             email: updatedUser.email,
-            // password: updatedPassword
+            password: updatedPassword.passwordHash
         })
 
     } catch (error) {
