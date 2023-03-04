@@ -29,7 +29,7 @@ authRouter.post('/auth/sign-up', async (req, res) => {
         })
 
         if (newUser) {
-            const newProfile = await Profile.create({ user: newUser })
+            const newProfile = await Profile.create({ user: newUser._id })
         }
 
         return res.status(201).json({
