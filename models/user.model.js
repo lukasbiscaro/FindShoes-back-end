@@ -25,7 +25,11 @@ const userSchema = new Schema({
     passwordHash: {
         type: String,
         require: true
-    }
+    },
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }]
 }, { timestamps: true })
 
 export default model('User', userSchema)
