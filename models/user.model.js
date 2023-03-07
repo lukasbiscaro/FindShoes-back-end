@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 import validator from "validator"
 
 const { model, Schema } = mongoose
@@ -25,11 +25,19 @@ const userSchema = new Schema({
     passwordHash: {
         type: String,
         require: true
-    },
-    products: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }]
+    }
 }, { timestamps: true })
+
+userSchema.pre('remove', async function (next) {
+    try {
+
+        await Product.deleteMany({ userId: req.user.id }).exec()
+        next()
+
+    } catch (error) {
+
+        res.status(500).json({ message: 'Internal Server Error' })
+    }
+})
 
 export default model('User', userSchema)
