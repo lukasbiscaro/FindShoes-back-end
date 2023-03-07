@@ -1,7 +1,5 @@
 import { Router } from "express";
 import User from '../models/user.model.js'
-import Profile from '../models/profile.model.js'
-import auth from '../middlewares/authenticatedMiddleware.js'
 
 const userRoutes = Router()
 
@@ -31,5 +29,6 @@ userRoutes.get('/users/:id', async (req, res) => {
         res.status(500).json(error)
     }
 })
+
 
 export default userRoutes

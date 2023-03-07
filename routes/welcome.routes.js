@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import authenticatedMiddleware from '../middlewares/authenticatedMiddleware.js'
 
 const welcomeRouter = Router()
 

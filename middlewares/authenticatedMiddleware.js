@@ -22,7 +22,7 @@ const authenticatedMiddleware = (req, res, next) => {
         req.user = decodedToken
 
         next()
-        
+
     } catch (error) {
         console.log(error)
         return res.status(401).json({ message: 'Unauthorized' })
