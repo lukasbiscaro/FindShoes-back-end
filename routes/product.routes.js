@@ -39,8 +39,8 @@ productRouter.get('/products', auth, async (req, res) => {
 
     try {
 
-        const products = await Product.find({ userId })
-
+        const products = await Product.find({ userId }).sort({ price: 1 })
+        
         res.status(200).json(products)
 
     } catch (error) {
