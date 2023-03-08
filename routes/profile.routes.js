@@ -63,7 +63,7 @@ profileRoutes.delete('/profile', auth, async (req, res) => {
 
         await Profile.findOneAndDelete({ user: req.user.id })
         await User.findOneAndDelete({ _id: req.user.id })
-        await Product.remove()
+        await Product.deleteMany({ userId: req.user.id })
 
         res.status(204).json('User was successfully deleted.')
 

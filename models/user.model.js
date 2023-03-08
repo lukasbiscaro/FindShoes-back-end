@@ -28,16 +28,4 @@ const userSchema = new Schema({
     }
 }, { timestamps: true })
 
-userSchema.pre('remove', async function (next) {
-    try {
-
-        await Product.deleteMany({ userId: req.user.id }).exec()
-        next()
-
-    } catch (error) {
-
-        res.status(500).json({ message: 'Internal Server Error' })
-    }
-})
-
 export default model('User', userSchema)
