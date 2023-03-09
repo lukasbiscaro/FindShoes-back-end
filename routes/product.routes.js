@@ -12,7 +12,7 @@ productRouter.post('/upload', auth, fileUpload.single('shoeImage'), (req, res) =
 
 productRouter.post('/sell', auth, async (req, res) => {
 
-    const { image, name, description, price } = req.body
+    const { image, name, size, description, price } = req.body
     const userId = req.user.id
 
     try {
@@ -20,6 +20,7 @@ productRouter.post('/sell', auth, async (req, res) => {
         const newProduct = await Product.create({
             image,
             name,
+            size,
             description,
             price,
             userId
