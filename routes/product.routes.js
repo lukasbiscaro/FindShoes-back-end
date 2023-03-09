@@ -40,12 +40,25 @@ productRouter.get('/products', auth, async (req, res) => {
     try {
 
         const products = await Product.find({ userId }).sort({ price: 1 })
-        
+
         res.status(200).json(products)
 
     } catch (error) {
         res.status(500).json('Internal Server Error')
     }
 })
+
+// productRouter.get('/products/one', auth, async (req, res) => {
+
+//     try {
+
+//         const product = await Product.find({ productId: _id })
+//         console.log(product)
+//         res.status(200).json(product)
+
+//     } catch (error) {
+//         res.status(500).json('Internal Server Error')
+//     }
+// })
 
 export default productRouter
