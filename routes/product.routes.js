@@ -14,6 +14,16 @@ productRouter.get('/all-products', async (req, res) => {
     }
 })
 
+productRouter.get('/all-products/:id', async (req, res) => {
+    const productId = req.params.id
+    try {
+        const products = await Product.findById(productId)
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(500).json("Internal Server Error")
+    }
+})
+
 productRouter.post('/upload', auth, fileUpload.single('shoeImage'), (req, res) => {
     res.status(201).json({ url: req.file.path })
 })
