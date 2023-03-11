@@ -3,6 +3,7 @@ import Profile from '../models/profile.model.js'
 import User from '../models/user.model.js'
 import auth from '../middlewares/authenticatedMiddleware.js'
 import Product from '../models/product.model.js'
+import Comment from '../models/comment.model.js'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
 
@@ -64,6 +65,7 @@ profileRoutes.delete('/profile', auth, async (req, res) => {
         await Profile.findOneAndDelete({ user: req.user.id })
         await User.findOneAndDelete({ _id: req.user.id })
         await Product.deleteMany({ userId: req.user.id })
+        await Comment.deleteMany({ userId: req.user.id })
 
         res.status(204).json('User was successfully deleted.')
 
