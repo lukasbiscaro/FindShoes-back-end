@@ -7,6 +7,7 @@ import welcomeRouter from './routes/welcome.routes.js'
 import users from './routes/users.routes.js'
 import profile from './routes/profile.routes.js'
 import product from './routes/product.routes.js'
+import comment from './routes/comment.routes.js'
 
 connectDb()
 
@@ -19,6 +20,7 @@ app.use(users)
 app.use(authRouter)
 app.use(profile)
 app.use(product)
+app.use(comment)
 
 const PORT = process.env.PORT
 app.listen(PORT, console.log('Server listening on port: ', PORT))
