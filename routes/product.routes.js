@@ -18,7 +18,7 @@ productRouter.get('/all-products/:id', async (req, res) => {
     const productId = req.params.id
     try {
         const products = await Product.findById(productId)
-        res.status(200).json(products)
+        res.status(200).json([products])
     } catch (error) {
         res.status(500).json("Internal Server Error")
     }
