@@ -71,18 +71,35 @@ productRouter.get('/my-products', auth, async (req, res) => {
     }
 })
 
-// productRouter.delete('/products', auth, async (req, res) => {
-//     const products = req.body.products
-//     try {
-//         for (let i = 0; i < products.length; i++) {
-//             console.log(products[i]._id)
-//           }
-//         await Product.findByIdAndRemove({ products })
-//         res.status(204).json()
+productRouter.put('/my-products/:id', auth, async (req, res) => {
+    const { id } = req.params
+    const { image, name, brand, size, description, price } = req.body
+    const userId = req.user.id
+    try {
 
-//     } catch (error) {
-//         res.status(500).json('Internal Server Error')
-//     }
-// })
+        const updatedProduct = await Product.findByIdAndUpdate({ _id: id, userId }, { image, name, brand, size, description, price }, { new: true })
+
+        res.status(200).json({
+            updatedProduct,
+            message: "Product was successfully updated."
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error." })
+    }
+})
+
+productRouter.delete('/my-products/:id', auth, async (req, res) => {
+    const { id } = req.params
+    try {
+
+        await Product.findOneAndDelete({ _id: id })
+        res.status(204).json({ message: "Product was successfully deleted." })
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error." })
+
+    }
+})
 
 export default productRouter
