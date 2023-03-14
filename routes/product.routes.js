@@ -32,8 +32,6 @@ productRouter.post('/upload', auth, fileUpload.single('shoeImage'), (req, res) =
 productRouter.post('/sell', auth, async (req, res) => {
     const { image, name, brand, size, description, price } = req.body
     const userId = req.user.id
-
-    console.log(req.body)
     try {
         const newProduct = await Product.create({
             image,
@@ -49,6 +47,22 @@ productRouter.post('/sell', auth, async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error' })
     }
 })
+
+productRouter.get('/sell/:id', auth, async (req, res) => {
+    const productId = req.params.id;
+    const userId = req.user.id;
+    try {
+        const product = await Product.findOne({ _id: productId, userId });
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        return res.status(200).json(product);
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 productRouter.get('/collections', async (req, res) => {
     try {
