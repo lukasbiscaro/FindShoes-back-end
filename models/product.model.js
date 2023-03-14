@@ -31,6 +31,10 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
+    // collections: [{
+    //     type: Schema.Types.Mixed,
+    //     ref: 'Collection'
+    // }]
 }, { timestamps: true })
 
 export default model('Product', productSchema)

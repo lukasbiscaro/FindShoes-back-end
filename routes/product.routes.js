@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import Product from '../models/product.model.js'
+// import Collection from '../models/collection.model.js'
 import fileUpload from '../config/cloudinary.config.js'
 import auth from '../middlewares/authenticatedMiddleware.js'
 
@@ -31,6 +32,8 @@ productRouter.post('/upload', auth, fileUpload.single('shoeImage'), (req, res) =
 productRouter.post('/sell', auth, async (req, res) => {
     const { image, name, brand, size, description, price } = req.body
     const userId = req.user.id
+
+    console.log(req.body)
     try {
         const newProduct = await Product.create({
             image,
@@ -42,6 +45,17 @@ productRouter.post('/sell', auth, async (req, res) => {
             userId
         })
         return res.status(201).json({ newProduct })
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' })
+    }
+})
+
+productRouter.get('/collections', async (req, res) => {
+    try {
+
+        const collections = await Product.distinct("collections")
+        res.status(200).json(collections)
+
     } catch (error) {
         return res.status(500).json({ message: 'Internal Server Error' })
     }
