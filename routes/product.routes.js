@@ -42,9 +42,9 @@ productRouter.post('/sell', auth, async (req, res) => {
             price,
             userId
         })
-        return res.status(201).json({ newProduct })
+        res.status(201).json({ newProduct })
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
@@ -55,23 +55,12 @@ productRouter.get('/sell/:id', auth, async (req, res) => {
         const product = await Product.findOne({ _id: productId, userId });
 
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            res.status(404).json({ message: 'Product not found' });
         }
 
-        return res.status(200).json(product);
+        res.status(200).json(product);
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-productRouter.get('/collections', async (req, res) => {
-    try {
-
-        const collections = await Product.distinct("collections")
-        res.status(200).json(collections)
-
-    } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 })
 
