@@ -16,6 +16,17 @@ commentRouter.get('/all-comments', async (req, res) => {
     }
 })
 
+commentRouter.get('/all-comments/:id', async (req, res) => {
+    const commentId = req.params.id
+    try {
+        const comment = await Comment.findById(commentId)
+
+        res.status(200).json(comment)
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error." })
+    }
+})
+
 commentRouter.post('/my-comment', auth, async (req, res) => {
     const { text } = req.body
     const userId = req.user.id
@@ -24,23 +35,36 @@ commentRouter.post('/my-comment', auth, async (req, res) => {
             text,
             userId
         })
-        return res.status(201).json({ newComment })
+        res.status(201).json({ newComment })
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
-commentRouter.put('/my-comment/:id', auth, async (req, res) => {
-    const { text } = req.body
-    const { id } = req.params
+commentRouter.get('/my-comment/:id', auth, async (req, res) => {
+    const commentId = req.params.id
+    const userId = req.user.id
     try {
+        const comment = await Comment.findOne({ _id: commentId, userId })
 
-        const updatedComment = await Comment.findOneAndUpdate({ _id: id }, { text }, { new: true })
+        if (!comment) {
+            res.status(404).json({ message: 'Comment not found.' });
+        }
 
-        res.status(200).json(updatedComment)
-
+        res.status(200).json(comment)
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: "Internal Server Error." })
+
+    }
+})
+
+commentRouter.get('/my-comment', auth, async (req, res) => {
+    const userId = req.user.id
+    try {
+        const comments = await Comment.find({ userId })
+        res.status(200).json(comments)
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error." })
     }
 })
 
@@ -48,18 +72,17 @@ commentRouter.put('/my-comment/:id', auth, async (req, res) => {
     const { text } = req.body
     const userId = req.user.id
     const { id } = req.params
+
     try {
         const comment = await Comment.findOneAndUpdate(
             { _id: id, userId },
             { text },
             { new: true }
         )
-        if (!comment) {
-            return res.status(404).json({ message: 'Comment not found' })
-        }
-        return res.status(200).json(comment)
+
+        res.status(200).json(comment)
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
@@ -69,11 +92,11 @@ commentRouter.delete('/my-comment/:id', auth, async (req, res) => {
     try {
         const comment = await Comment.findOneAndDelete({ _id: id, userId })
         if (!comment) {
-            return res.status(404).json({ message: 'Comment not found' })
+            res.status(404).json({ message: 'Comment not found' })
         }
-        return res.status(204).end()
+        res.status(204).end()
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
