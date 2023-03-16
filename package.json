@@ -1,5 +1,5 @@
 {
-  "name": "nftmktplc-back-end",
+  "name": "findshoes-back-end",
   "version": "1.0.0",
   "description": "Back-end of Project 3 developed in the IronHack Web Development course.",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukasbiscaro/nftmktplc-back-end.git"
+    "url": "git+https://github.com/lukasbiscaro/FindShoes-back-end.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lukasbiscaro/nftmktplc-back-end/issues"
+    "url": "https://github.com/lukasbiscaro/FindShoes-back-end/issues"
   },
-  "homepage": "https://github.com/lukasbiscaro/nftmktplc-back-end#readme",
+  "homepage": "https://github.com/lukasbiscaro/FindShoes-back-end#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.35.0",
@@ -29,6 +29,7 @@
     "mongoose": "^6.9.3",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^2.0.21",
     "validator": "^13.9.0"
   }
 }
