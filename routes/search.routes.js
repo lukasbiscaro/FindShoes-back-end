@@ -4,9 +4,21 @@ import auth from '../middlewares/authenticatedMiddleware.js'
 
 const searchRoutes = Router()
 
-searchRoutes.get('/exploreItems/search', auth, async (req, res) => {
+searchRoutes.get('/exploreItems/search', async (req, res) => {
     const { query } = req.query
-    console.log(req.query)
+    try {
+        const regex = new RegExp(query, 'i')
+        const search = await Product.find({ name: { $regex: regex } })
+        res.status(200).json(search)
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error." })
+
+    }
+})
+
+searchRoutes.get('/my-products/search', auth, async (req, res) => {
+    const { query } = req.query
     try {
         const regex = new RegExp(query, 'i')
         const search = await Product.find({ name: { $regex: regex } })
