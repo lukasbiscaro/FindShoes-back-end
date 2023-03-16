@@ -4,7 +4,7 @@ import auth from '../middlewares/authenticatedMiddleware.js'
 
 const searchRoutes = Router()
 
-searchRoutes.get('/exploreItems/search', async (req, res) => {
+searchRoutes.get('/all-sneakers/search', async (req, res) => {
     const { query } = req.query
     try {
         const regex = new RegExp(query, 'i')
