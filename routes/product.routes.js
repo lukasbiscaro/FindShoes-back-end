@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import Product from '../models/product.model.js'
-// import Collection from '../models/collection.model.js'
 import fileUpload from '../config/cloudinary.config.js'
 import auth from '../middlewares/authenticatedMiddleware.js'
 
