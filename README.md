@@ -10,15 +10,15 @@ The project was created using the MEAN stack and ReactJS for the front-end. It w
 
 <ul>
 
-<li><a href="https://www.mongodb.com/" target="_blank">MongoDB: A NoSQL database used to store product and user data.</a></li>
+<li><a href="https://www.mongodb.com/" target="_blank">MongoDB</a></li>
 
-<li><a href="https://expressjs.com" target="_blank">Express: A web application framework for NodeJS used to handle HTTP requests and responses.</a></li>
+<li><a href="https://expressjs.com" target="_blank">Express</a></li>
 
-<li><a href="https://nodejs.org/en" target="_blank">NodeJS: A JavaScript runtime environment used to run server-side JavaScript code.</a></li>
+<li><a href="https://nodejs.org/en" target="_blank">NodeJS</a></li>
 
-<li><a href="https://react.dev/" target="_blank">ReactJS: A JavaScript library used to build user interfaces.</a></li>
+<li><a href="https://react.dev/" target="_blank">ReactJS</a></li>
 
-<li><a href="https://tailwindcss.com/" target="_blank">Tailwind CSS: A utility-first CSS framework used to style the marketplace.</a></li>
+<li><a href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a></li>
 </ul>
 
 # ✏️ How To Execute
