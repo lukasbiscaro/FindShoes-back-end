@@ -48,18 +48,18 @@ productRouter.post('/sell', auth, async (req, res) => {
 })
 
 productRouter.get('/sell/:id', auth, async (req, res) => {
-    const productId = req.params.id;
-    const userId = req.user.id;
+    const productId = req.params.id
+    const userId = req.user.id
     try {
-        const product = await Product.findOne({ _id: productId, userId });
+        const product = await Product.findOne({ _id: productId, userId })
 
         if (!product) {
-            res.status(404).json({ message: 'Product not found' });
+            res.status(404).json({ message: 'Product not found' })
         }
 
-        res.status(200).json(product);
+        res.status(200).json(product)
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 

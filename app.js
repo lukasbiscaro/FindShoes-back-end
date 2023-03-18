@@ -18,11 +18,11 @@ app.use(express.json())
 
 app.use(welcomeRouter)
 app.use(users)
+app.use(search)
 app.use(authRouter)
 app.use(profile)
 app.use(product)
 app.use(comment)
-app.use(search)
 
 const PORT = process.env.PORT
 app.listen(PORT, console.log('Server listening on port: ', PORT))

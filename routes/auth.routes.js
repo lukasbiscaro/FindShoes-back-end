@@ -32,7 +32,7 @@ authRouter.post('/auth/sign-up', async (req, res) => {
             const newProfile = await Profile.create({ user: newUser._id })
         }
 
-        return res.status(201).json({
+        res.status(201).json({
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             email: newUser.email,
@@ -40,7 +40,7 @@ authRouter.post('/auth/sign-up', async (req, res) => {
         })
 
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
@@ -66,7 +66,7 @@ authRouter.post('/auth/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn })
 
-        return res.status(200).json({
+        res.status(200).json({
             message: `Successfully accessed by: ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}`,
             user: {
                 user: user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1),
@@ -77,7 +77,7 @@ authRouter.post('/auth/login', async (req, res) => {
         })
 
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' })
     }
 })
 
